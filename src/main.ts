@@ -23,7 +23,7 @@ async function bootstrap() {
   )
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('DGTL Backend API')
+    .setTitle('DGTL Service Backend API')
     .setDescription('Authenticated API for the DGTL client and admin portals.')
     .setVersion('1.0')
     .addBearerAuth()

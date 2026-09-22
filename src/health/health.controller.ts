@@ -7,6 +7,6 @@ export class HealthController {
   @Get()
   @ApiOperation({ summary: 'API health check' })
   check() {
-    return { status: 'ok', service: 'dgtl-backend' }
+    return { status: 'ok', service: 'dgtl-service-backend' }
   }
 }

@@ -1,4 +1,4 @@
-# DGTL Backend
+# DGTL Service Backend
 
 NestJS API for the DGTL Service Hub. Supabase provides identity and PostgreSQL; this API owns privileged client-management operations and keeps the secret key off the browser.
 
