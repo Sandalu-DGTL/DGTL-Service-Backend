@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common'
-import type { RequestUser, ServiceAccess } from '../common/models'
-import { SupabaseService } from '../services/supabase.service'
+import type { RequestUser, ServiceAccess } from '../common/models.js'
+import { SupabaseService } from '../services/supabase.service.js'
 
 type AccessRow = {
   tool_url: string | null

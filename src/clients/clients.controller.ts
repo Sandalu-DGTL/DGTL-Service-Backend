@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Req, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Roles } from '../auth/roles.decorator'
-import { RolesGuard } from '../auth/roles.guard'
-import { SupabaseAuthGuard } from '../auth/supabase-auth.guard'
-import type { RequestWithUser } from '../common/request-with-user'
-import { ClientsService } from './clients.service'
-import { UpdateClientDto } from './dto/update-client.dto'
+import { Roles } from '../auth/roles.decorator.js'
+import { RolesGuard } from '../auth/roles.guard.js'
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard.js'
+import type { RequestWithUser } from '../common/request-with-user.js'
+import { ClientsService } from './clients.service.js'
+import { UpdateClientDto } from './dto/update-client.dto.js'
 
 @ApiTags('Admin clients')
 @ApiBearerAuth()

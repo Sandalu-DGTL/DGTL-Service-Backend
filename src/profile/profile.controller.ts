@@ -1,8 +1,8 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { SupabaseAuthGuard } from '../auth/supabase-auth.guard'
-import type { RequestWithUser } from '../common/request-with-user'
-import { ProfileService } from './profile.service'
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard.js'
+import type { RequestWithUser } from '../common/request-with-user.js'
+import { ProfileService } from './profile.service.js'
 
 @ApiTags('Profile')
 @ApiBearerAuth()

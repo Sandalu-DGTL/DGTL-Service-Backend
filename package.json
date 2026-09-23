@@ -2,6 +2,7 @@
   "name": "dgtl-service-backend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
@@ -31,6 +32,6 @@
     "typescript": "6.0.3"
   },
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.12.0"
   }
 }

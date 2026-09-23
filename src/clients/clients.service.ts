@@ -4,9 +4,9 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common'
-import type { ClientStatus, ClientView, ServiceAccess } from '../common/models'
-import { SupabaseService } from '../services/supabase.service'
-import type { UpdateClientDto } from './dto/update-client.dto'
+import type { ClientStatus, ClientView, ServiceAccess } from '../common/models.js'
+import { SupabaseService } from '../services/supabase.service.js'
+import type { UpdateClientDto } from './dto/update-client.dto.js'
 
 type ProfileRow = {
   id: string

@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
-import { RolesGuard } from './roles.guard'
-import { SupabaseAuthGuard } from './supabase-auth.guard'
+import { RolesGuard } from './roles.guard.js'
+import { SupabaseAuthGuard } from './supabase-auth.guard.js'
 
 @Global()
 @Module({
