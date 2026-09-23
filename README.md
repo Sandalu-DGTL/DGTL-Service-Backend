@@ -4,7 +4,7 @@ NestJS API for the DGTL Service Hub. Supabase provides identity and PostgreSQL; 
 
 ## Local setup
 
-1. Copy `.env.example` to `.env` and add the Supabase project URL and server-only secret key.
+1. Copy `.env.example` to `.env` and add the Supabase project URL and server-only service-role key.
 2. Run `supabase/migrations/202609220001_initial_dgtl_auth.sql` in the Supabase SQL editor (or apply it with the Supabase CLI).
 3. Install and run:
 
@@ -42,4 +42,4 @@ update public.services set default_url = 'https://hr.dgtl.lk' where key = 'hr';
 - `SupabaseAuthGuard` validates that token with Supabase Auth.
 - `RolesGuard` checks the role loaded from the protected profile row.
 - Supabase Row Level Security adds database-level protection.
-- `SUPABASE_SECRET_KEY` belongs only in this backend. Never add it to a `NEXT_PUBLIC_*` variable.
+- `SUPABASE_SERVICE_ROLE_KEY` belongs only in this backend. `SUPABASE_SECRET_KEY` is also accepted as a fallback for manually managed secret keys. Never add either value to a `NEXT_PUBLIC_*` variable.
