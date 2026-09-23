@@ -2,6 +2,8 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  InternalServerErrorException,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common'
 import type { Request } from 'express'
@@ -11,6 +13,8 @@ import type { AppRole, ClientStatus } from '../common/models.js'
 
 @Injectable()
 export class SupabaseAuthGuard implements CanActivate {
+  private readonly logger = new Logger(SupabaseAuthGuard.name)
+
   constructor(private readonly supabase: SupabaseService) {}
 
   async canActivate(context: ExecutionContext) {
@@ -28,7 +32,14 @@ export class SupabaseAuthGuard implements CanActivate {
       .eq('id', data.user.id)
       .single()
 
-    if (profileError || !profile) {
+    if (profileError) {
+      this.logger.error(
+        `Profile lookup failed (${profileError.code ?? 'unknown'}): ${profileError.message}`,
+      )
+      throw new InternalServerErrorException('Could not load the DGTL account profile.')
+    }
+
+    if (!profile) {
       throw new UnauthorizedException('No DGTL profile exists for this account.')
     }
 
