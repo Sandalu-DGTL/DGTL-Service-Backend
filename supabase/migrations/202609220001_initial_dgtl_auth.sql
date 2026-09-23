@@ -184,6 +184,13 @@ grant update (full_name, avatar_url) on table public.profiles to authenticated;
 grant select on table public.services to authenticated;
 grant select on table public.client_service_access to authenticated;
 
+-- Projects created with automatic Data API grants disabled do not grant
+-- application tables to service_role. The backend needs these explicit,
+-- minimal privileges in addition to service_role's RLS bypass.
+grant usage on schema public to service_role;
+grant select on table public.profiles, public.services, public.client_service_access to service_role;
+grant update (full_name, status) on table public.profiles to service_role;
+
 create policy "Users can read their own profile"
 on public.profiles for select to authenticated
 using ((select auth.uid()) = id);
