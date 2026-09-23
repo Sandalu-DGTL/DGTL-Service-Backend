@@ -3,7 +3,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import helmet from 'helmet'
+import helmetModule from 'helmet'
 import { AppModule } from './app.module.js'
 
 async function bootstrap() {
@@ -11,6 +11,9 @@ async function bootstrap() {
   const config = app.get(ConfigService)
   const frontendOrigin = config.get<string>('FRONTEND_ORIGIN') ?? 'http://localhost:3000'
 
+  // Helmet's conditional ESM/CJS types are resolved as a module namespace by
+  // Vercel's build type-checker even though the ESM default export is callable.
+  const helmet = helmetModule as unknown as () => Parameters<typeof app.use>[0]
   app.use(helmet())
   app.enableCors({
     origin: frontendOrigin.split(',').map((origin) => origin.trim()),
