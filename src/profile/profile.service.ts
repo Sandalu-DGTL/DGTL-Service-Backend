@@ -27,12 +27,11 @@ export class ProfileService {
     if (error) throw new InternalServerErrorException('Could not load assigned services.')
 
     return ((data ?? []) as unknown as AccessRow[])
-      .filter((row) => row.services)
-      .map((row) => ({
-        key: row.services!.key,
-        name: row.services!.name,
-        description: row.services!.description,
-        url: row.tool_url ?? row.services!.default_url,
-      }))
+      .flatMap(({ services: service, tool_url }) => service ? [{
+        key: service.key,
+        name: service.name,
+        description: service.description,
+        url: tool_url ?? service.default_url,
+      }] : [])
   }
 }

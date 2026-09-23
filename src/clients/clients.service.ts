@@ -36,12 +36,14 @@ type AccessRow = {
 export class ClientsService {
   constructor(private readonly supabase: SupabaseService) {}
 
-  async listClients(): Promise<ClientView[]> {
-    const { data: profiles, error: profileError } = await this.supabase.admin
+  async listClients(clientId?: string): Promise<ClientView[]> {
+    let query = this.supabase.admin
       .from('profiles')
       .select('id, email, full_name, role, status, created_at')
       .eq('role', 'client')
       .order('created_at', { ascending: false })
+    if (clientId) query = query.eq('id', clientId)
+    const { data: profiles, error: profileError } = await query
 
     if (profileError) throw new InternalServerErrorException('Could not load clients.')
     if (!profiles?.length) return []
@@ -117,7 +119,7 @@ export class ClientsService {
       await this.replaceServiceAccess(clientId, dto.serviceKeys, adminId)
     }
 
-    const clients = await this.listClients()
+    const clients = await this.listClients(clientId)
     const updated = clients.find((item) => item.id === clientId)
     if (!updated) throw new NotFoundException('Updated client could not be loaded.')
     return updated
