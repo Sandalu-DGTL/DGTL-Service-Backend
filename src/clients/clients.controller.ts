@@ -21,6 +21,12 @@ export class ClientsController {
     return this.clients.listClients()
   }
 
+  @Get('services')
+  @ApiOperation({ summary: 'List services that an admin can assign to clients' })
+  listServices() {
+    return this.clients.listServices()
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Update a client and replace assigned services' })
   updateClient(

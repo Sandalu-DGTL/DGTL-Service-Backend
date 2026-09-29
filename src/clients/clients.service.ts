@@ -4,7 +4,12 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common'
-import type { ClientStatus, ClientView, ServiceAccess } from '../common/models.js'
+import type {
+  ClientStatus,
+  ClientView,
+  ServiceAccess,
+  ServiceCatalogItem,
+} from '../common/models.js'
 import { SupabaseService } from '../services/supabase.service.js'
 import type { UpdateClientDto } from './dto/update-client.dto.js'
 
@@ -35,6 +40,22 @@ type AccessRow = {
 @Injectable()
 export class ClientsService {
   constructor(private readonly supabase: SupabaseService) {}
+
+  async listServices(): Promise<ServiceCatalogItem[]> {
+    const { data, error } = await this.supabase.admin
+      .from('services')
+      .select('key, name, description, default_url')
+      .order('name')
+
+    if (error) throw new InternalServerErrorException('Could not load the service catalog.')
+
+    return (data ?? []).map((service) => ({
+      key: service.key,
+      name: service.name,
+      description: service.description,
+      url: service.default_url,
+    }))
+  }
 
   async listClients(clientId?: string): Promise<ClientView[]> {
     let query = this.supabase.admin

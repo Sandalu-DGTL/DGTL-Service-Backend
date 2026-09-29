@@ -1,7 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { IsArray, IsIn, IsOptional, IsString, MaxLength } from 'class-validator'
+import { ArrayMaxSize, IsArray, IsIn, IsOptional, IsString, Matches, MaxLength } from 'class-validator'
 
-const serviceKeys = ['cms', 'crm', 'seo', 'hr'] as const
 const statuses = ['invited', 'active', 'suspended'] as const
 
 export class UpdateClientDto {
@@ -16,9 +15,12 @@ export class UpdateClientDto {
   @IsIn(statuses)
   status?: (typeof statuses)[number]
 
-  @ApiPropertyOptional({ enum: serviceKeys, isArray: true })
+  @ApiPropertyOptional({ type: [String], example: ['cms', 'seo'] })
   @IsOptional()
   @IsArray()
-  @IsIn(serviceKeys, { each: true })
-  serviceKeys?: (typeof serviceKeys)[number][]
+  @ArrayMaxSize(50)
+  @IsString({ each: true })
+  @MaxLength(64, { each: true })
+  @Matches(/^[a-z0-9][a-z0-9-]*$/, { each: true })
+  serviceKeys?: string[]
 }

@@ -17,6 +17,8 @@ export type ServiceAccess = {
   url: string | null
 }
 
+export type ServiceCatalogItem = ServiceAccess
+
 export type ClientView = Omit<RequestUser, 'accessToken'> & {
   createdAt: string
   services: ServiceAccess[]
